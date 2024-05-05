@@ -15,18 +15,22 @@ var scenario_data = {}
 
 func scenario_load(world):
 	var path_to_file = "res://Scenarios/"+world+"/config.cfg"
-	var file = File.new()
+	var file = FileAccess.open(path_to_file, FileAccess.READ)
 	if not file.file_exists(path_to_file):
 		return false
 		
-	file.open(path_to_file, File.READ)
-	scenario_data = parse_json(file.get_line())
+	#file.open(path_to_file, File.READ)
+	var json = JSON.new()
+	#scenario_data = json_object.parse(file.get_line())
+	var error = json.parse(file.get_line()) # TODO FIXME this reads only one line. use file.get_as_text()
+	if error == OK:
+		scenario_data = json.data
 	file.close()
 	return true
 
 func scenario_place_countries(data):
 	for country in data.countries:
-		var new_country = country_scene.instance()
+		var new_country = country_scene.instantiate()
 		new_country.setup(scenario_path, country)
 		$CountryHolder.add_child(new_country)
 		new_country.position = Vector2(country.pos_x, country.pos_y)
@@ -42,9 +46,9 @@ func _ready():
 		scenario_place_countries(scenario_data)
 		
 		# Process Color Map
-		image_data = $MapPixelRead.texture.get_data().duplicate()
+		image_data = $MapPixelRead.texture.get_image().duplicate()
 		image_data.decompress()
-		image_data.lock()
+		#image_data.lock() # useless in godot 4.x ? 
 
 		# Position Countries
 		$CountryHolder.position = -image_data.get_size()/2
@@ -75,8 +79,8 @@ func _physics_process(delta):
 
 func _on_ValidMouseClickOverlay_gui_input(event):
 	if event is InputEventMouseButton:
-		if event.button_index == BUTTON_LEFT:
-			mouse_pos = get_global_mouse_position().ceil() + image_data.get_size()/2
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			mouse_pos = get_global_mouse_position().ceil() + Vector2(image_data.get_size()/2)
 			var color = image_data.get_pixelv(mouse_pos).to_html(false)
 			var click_id = color.left(2)
 			click_id = ("0x"+click_id).hex_to_int()

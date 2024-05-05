@@ -6,11 +6,11 @@ shader_type canvas_item;
 // change at runtime
 uniform bool selected = false;
 uniform bool overlay = false;
-uniform vec4 selected_color : hint_color = vec4(0.98823, 0.97647, 0.37647, 0.5);
-uniform vec4 overlay_color : hint_color = vec4(0.98823, 0.97647, 0.37647, 0.5);
+uniform vec4 selected_color : source_color = vec4(0.98823, 0.97647, 0.37647, 0.5);
+uniform vec4 overlay_color : source_color = vec4(0.98823, 0.97647, 0.37647, 0.5);
 
 // constant
-uniform vec4 border_color : hint_color = vec4(0.98823, 0.97647, 0.37647, 1.0);
+uniform vec4 border_color : source_color = vec4(0.98823, 0.97647, 0.37647, 1.0);
 uniform float width : hint_range(0, 10) = 1.0;
 uniform int pattern : hint_range(0, 2) = 0; // diamond, circle, square
 uniform bool inside = false;

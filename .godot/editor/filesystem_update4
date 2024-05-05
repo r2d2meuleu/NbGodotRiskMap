@@ -1,0 +1,6 @@
+res://Src/Map/Map2D.tscn
+res://Src/Map/Camera2D.gd
+res://Src/Map/Map2D.gd
+res://Src/Map/MapCountry.gd
+res://Src/Map/MapCountry.tscn
+res://Src/Map/CountryOutline.gdshader

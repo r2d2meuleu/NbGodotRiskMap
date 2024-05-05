@@ -16,9 +16,9 @@ func setup(scenario_path, country_data):
 	$z.position = size/2
 
 	# Connect signals
-	Events.connect("map_select_country", self, "select")
-	Events.connect("map_highlight_countries", self, "highlight_multiples")
-	Events.connect("map_highlight_countries_clear", self, "highlight_clear")
+	Events.map_select_country.connect(select)
+	Events.map_highlight_countries.connect(highlight_multiples)
+	Events.map_highlight_countries_clear.connect(highlight_clear)
 	
 	# Make shader unique
 	$Sprite.set_material($Sprite.get_material().duplicate())
@@ -28,21 +28,21 @@ func select(country_id, color, show_name):
 	if country_id == id:
 		if show_name:
 			$z/Label.show()
-		$Sprite.material.set_shader_param("selected_color", color)
-		$Sprite.material.set_shader_param("selected", true)
+		$Sprite.material.set_shader_parameter("selected_color", color)
+		$Sprite.material.set_shader_parameter("selected", true)
 	else:
 		$z/Label.hide()
-		$Sprite.material.set_shader_param("selected", false)
+		$Sprite.material.set_shader_parameter("selected", false)
 
 		
 
 func highlight_multiples(country_id, color):
 	if country_id == id:
-		$Sprite.material.set_shader_param("overlay_color", color)
-		$Sprite.material.set_shader_param("overlay", true)
+		$Sprite.material.set_shader_parameter("overlay_color", color)
+		$Sprite.material.set_shader_parameter("overlay", true)
 
 
 func highlight_clear(country_id):
 	if country_id == id:
-		$Sprite.material.set_shader_param("overlay", false)
+		$Sprite.material.set_shader_parameter("overlay", false)
 

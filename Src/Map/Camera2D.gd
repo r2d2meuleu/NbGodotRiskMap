@@ -1,7 +1,8 @@
 extends Camera2D
 
-export (int) var camera_speed = 250 
-export (int) var camera_margin = 30
+@export var camera_speed:int = 250 
+@export var camera_margin:int = 30
+
 
 var map_size = Vector2(1000,1000)
 
@@ -19,9 +20,9 @@ func _ready():
 
 func _input(event):
 	if event is InputEventMouseButton:
-		if event.button_index == BUTTON_WHEEL_UP and event.pressed:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
 			zoom_in()
-		elif event.button_index == BUTTON_WHEEL_DOWN and event.pressed:
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
 			zoom_out()
 
 func _physics_process(delta):
